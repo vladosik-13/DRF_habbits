@@ -1,7 +1,6 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
-from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from telegram_bot.serializers import RegisterSerializer, UserSerializer
 
