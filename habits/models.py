@@ -1,17 +1,16 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 def validate_execution_time(value):
     if value > 120:
         raise ValidationError("Время выполнения не должно превышать 120 секунд.")
 
-
 def validate_periodicity(value):
     if value < 7:
         raise ValidationError("Периодичность выполнения не может быть менее 7 дней.")
-
 
 def validate_reward_and_related_habit(habit):
     if habit.reward and habit.related_habit:
@@ -24,7 +23,6 @@ def validate_reward_and_related_habit(habit):
         raise ValidationError(
             "У приятной привычки не может быть вознаграждения или связанной привычки."
         )
-
 
 class Habit(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="habits")
@@ -41,7 +39,7 @@ class Habit(models.Model):
     )
     periodicity = models.PositiveIntegerField(
         default=1, validators=[validate_periodicity]
-    )  # in days
+    )
     reward = models.CharField(max_length=255, null=True, blank=True)
     execution_time = models.PositiveIntegerField(
         validators=[validate_execution_time]
