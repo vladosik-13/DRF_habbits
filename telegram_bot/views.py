@@ -22,8 +22,8 @@ def start_bot(request):
         except User.DoesNotExist:
             user = User.objects.create_user(username=username, email=f"{username}@example.com", password=settings.DEFAULT_TELEGRAM_USER_PASSWORD)
 
-        user.profile.telegram_chat_id = chat_id
-        user.profile.save()
+        user.telegram_profile.telegram_chat_id = chat_id
+        user.telegram_profile.save()
 
         return JsonResponse({"status": "success"})
     return JsonResponse({"status": "error"}, status=400)

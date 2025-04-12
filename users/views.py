@@ -4,6 +4,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth import get_user_model
 from .serializers import RegisterSerializer, UserSerializer
 
+
 User = get_user_model()
 
 class RegisterView(generics.CreateAPIView):

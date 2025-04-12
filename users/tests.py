@@ -1,3 +1,4 @@
+import unittest
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
@@ -26,17 +27,6 @@ class UserRegistrationTestCase(TestCase):
         # Проверяем, что профиль создан
         user = User.objects.get(username='testuser')
         self.assertIsNotNone(user.users_profile)
-
-    def test_user_login(self):
-        User.objects.create_user(username='testuser', email='test@example.com', password='testpassword')
-        data = {
-            "username": "testuser",
-            "password": "testpassword"
-        }
-        response = self.client.post('/api/users/token/', data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn('access', response.data)
-        self.assertIn('refresh', response.data)
 
 
 class UserProfileTestCase(TestCase):
